@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Colleting Data</title>
+
+
+	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+
+<body class="container" style="margin-top: 50px;
+	width: 50%; height:auto;">
+	
+	<h2 class="text-primary" style=
+		"margin-left: 15px; margin-bottom: 10px">
+		Hey There,Help Us In Collecting Data
+	</h2>
+	
+	<form class="container" id="contactForm">
+		<div class="card">
+			<div class="card-body">
+				<div class="form-group">
+					<label for="exampleFormControlInput1">
+						Enter Your Name
+					</label>
+					
+					<input type="text" class="form-control"
+					id="name" placeholder="Enter your name">
+				</div>
+
+				<div class="form-group">
+					<label for="exampleFormControlInput1">
+						Email address
+					</label>
+					
+					<input type="email" class="form-control"
+					id="email" placeholder="name@example.com">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary"
+				style="margin-left: 15px; margin-top: 10px">
+				Submit
+			</button>
+		</div>
+	</form>
+
+	<script src=
+"https://www.gstatic.com/firebasejs/3.7.4/firebase.js">
+	</script>
+	
+	<script>
+		var firebaseConfig = {
+    apiKey: "AIzaSyB9Q5nfYmk9fburfhLf3flUpUjj4ygcnsY",
+    authDomain: "test2-93458.firebaseapp.com",
+    databaseURL: "https://test2-93458-default-rtdb.firebaseio.com",
+    projectId: "test2-93458",
+    storageBucket: "test2-93458.appspot.com",
+    messagingSenderId: "339101671651",
+    appId: "1:339101671651:web:039587bb5488b149db25d6",
+    measurementId: "G-7ELHSQXPG7"
+  };
+
+		firebase.initializeApp(firebaseConfig);
+
+		var messagesRef = firebase.database()
+			.ref('Collected Data');
+		
+		document.getElementById('contactForm')
+			.addEventListener('submit', submitForm);
+
+		function submitForm(e) {
+			e.preventDefault();
+
+			// Get values
+			var name = getInputVal('name');
+			var email = getInputVal('email');
+
+			saveMessage(name, email);
+			document.getElementById('contactForm').reset();
+		}
+
+		// Function to get get form values 
+		function getInputVal(id) {
+			return document.getElementById(id).value;
+		}
+
+		// Save message to firebase
+		function saveMessage(name, email) {
+			var newMessageRef = messagesRef.push();
+			newMessageRef.set({
+				name: name,
+				email: email,
+			});
+		}
+	</script>
+</body>
+
+</html>
